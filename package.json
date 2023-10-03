@@ -1,26 +1,20 @@
 {
   "name": "usermicroservice",
   "version": "1.0.0",
-  "description": "A user microservice for e-commerce platforms",
+  "description": "A user microservice for e-commerce stores",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chiazam/usermicroservices.git"
+    "url": "git+https://github.com/chiazam/UserMicroService.git"
   },
-  "keywords": [
-    "e-commerce",
-    "micro-services"
-  ],
-  "author": "chiazam udekwe",
+  "author": "Udekwe Chiazam",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/chiazam/usermicroservices/issues"
+    "url": "https://github.com/chiazam/UserMicroService/issues"
   },
-  "homepage": "https://github.com/chiazam/usermicroservices#readme",
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+  "homepage": "https://github.com/chiazam/UserMicroService#readme"
 }
