@@ -26,14 +26,16 @@ const sql = {
 
         let conn = this.dbconn();
 
-        let lastid = conn.query(`INSERT INTO ${table} SET ?`, item, (err, res) => {
+        let lastid = false;
+
+        conn.query(`INSERT INTO ${table} SET ?`, item, (err, res) => {
 
             if (err) throw err;
 
-            return res.insertId;
+            lastid = res.insertId;
         });
 
-        this.dbend();
+        this.dbend(conn);
 
         return lastid;
 

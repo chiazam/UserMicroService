@@ -37,15 +37,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` longtext NOT NULL,
   `password` longtext NOT NULL,
   `type` longtext NOT NULL,
-  `logid` longtext NOT NULL,
+  `logid` longtext,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table usermicroservice.users: ~1 rows (approximately)
+-- Dumping data for table usermicroservice.users: ~0 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `type`, `logid`, `date`) VALUES
-	(1, 'Azam Udekwe', 'azam@gmail.com', '$2y$10$BbpSpivuL.KDbRMtLozdwuzYk1jn3x6f32uLmNFQHh/5zmFlTvr0u', 'seller', '', '2023-09-27 01:39:15');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Dumping structure for table usermicroservice.verify
@@ -57,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `verify` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table usermicroservice.verify: ~1 rows (approximately)
+-- Dumping data for table usermicroservice.verify: ~0 rows (approximately)
 /*!40000 ALTER TABLE `verify` DISABLE KEYS */;
 INSERT INTO `verify` (`id`, `token`, `userid`, `why`) VALUES
 	(1, 'd2ljpd8hl', '1', 'user');

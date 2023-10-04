@@ -1,3 +1,5 @@
+let sql = require('../class/mysql');
+
 let create = {
 
     regFullName: /^[a-zA-Z]+ [a-zA-Z]+$/,
@@ -72,7 +74,9 @@ let create = {
 
         } else {
 
-            res.json([body, query]);
+            let lastid = sql.dbinsert("users", body);
+
+            res.json([lastid, body, query]);
 
         }
 
