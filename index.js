@@ -14,25 +14,7 @@ app.use(bodyParser.json());
 
 // create user route starts .......
 
-app.post('/create', (req, res) => {
-
-    const query = req.query;
-
-    const body = req.body;
-
-    console.log(body, query);
-
-    let valid = create.validateinfo(body);
-
-    if (valid !== true) {
-
-        res.json(valid);
-
-    }
-
-    res.json([body, query]);
-
-});
+app.post('/create', create.handler);
 
 // create user route ends .......
 

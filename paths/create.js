@@ -8,7 +8,7 @@ let create = {
 
     userTypes: ["seller", "buyer"],
 
-    validateinfo: (info) => {
+    validateinfo: function (info) {
 
         let valid = true;
 
@@ -51,6 +51,30 @@ let create = {
             message: message
 
         });
+
+    },
+
+    handler: function (req, res) {
+
+        const query = req.query;
+
+        const body = req.body;
+
+        console.log(body, query);
+
+        let valid = create.validateinfo(body);
+
+        if (valid !== true) {
+
+            res.statusCode = 200;
+
+            res.json(valid);
+
+        } else {
+
+            res.json([body, query]);
+
+        }
 
     }
 
