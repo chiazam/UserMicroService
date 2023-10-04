@@ -1,6 +1,10 @@
 let sql = require('../class/mysql');
+let config = require("../config/config")
+let bcrypt = require('bcrypt');
 
 let create = {
+
+    saltRounds: 10,
 
     regFullName: /^[a-zA-Z]+ [a-zA-Z]+$/,
 
@@ -56,7 +60,7 @@ let create = {
 
     },
 
-    handler: function (req, res) {
+    handler: async function (req, res) {
 
         const query = req.query;
 
@@ -68,15 +72,34 @@ let create = {
 
         if (valid !== true) {
 
-            res.statusCode = 200;
+            res.statusCode = 400;
 
             res.json(valid);
 
         } else {
 
-            let lastid = sql.dbinsert("users", body);
+            res.statusCode = 200;
 
-            res.json([lastid, body, query]);
+            let encryptedPassword = await bcrypt.hash(body.password, create.saltRounds)
+
+            body.password = encryptedPassword;
+
+            let lastid = await sql.dbinsert(`users`, body);
+
+            await sql.dbinsert(`verify`, { token: config.makeid(10), userid: lastid, why: "user" });
+
+            let user = await sql.dbget('users', { id: lastid });
+
+            delete user[0].password;
+
+            res.json({
+
+                status: valid,
+                message: "Create User Success",
+                data: {
+                    user: user[0]
+                }
+            });
 
         }
 

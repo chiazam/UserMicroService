@@ -1,43 +1,56 @@
 const mysql = require("mysql");
 
+let dbinfo = {
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "usermicroservice"
+};
+
+let conn = mysql.createConnection(dbinfo);
+
+conn.connect(err => { if (err) throw err; });
+
 const sql = {
 
-    dbinfo: {
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "usermicroservice"
-    },
-    dbconn: function () {
+    dbinfo: dbinfo,
+    dbconn: conn,
+    dbinsert: async function (table, item) {
 
-        let conn = mysql.createConnection(this.dbinfo);
+        return new Promise((resolve, reject) => {
 
-        conn.connect(err => { if (err) throw err; });
+            this.dbconn.query(`INSERT INTO ${table} SET ?`, item, (err, res) => {
 
-        return conn;
+                if (err) reject(false);
 
-    },
-    dbend: function (conn) {
+                resolve(res.insertId);
 
-        conn.end(err => { if (err) throw err; });
+            });
 
-    },
-    dbinsert: function (table, item, result = false) {
-
-        let conn = this.dbconn();
-
-        let lastid = false;
-
-        conn.query(`INSERT INTO ${table} SET ?`, item, (err, res) => {
-
-            if (err) throw err;
-
-            lastid = res.insertId;
         });
 
-        this.dbend(conn);
+    },
+    dbget: async function (table, item = 1, column = "*", limit = 1, offset = 0) {
 
-        return lastid;
+        return new Promise((resolve, reject) => {
+
+            this.dbconn.query(`SELECT ${column} FROM ${table} WHERE ? LIMIT ${limit} OFFSET ${offset}`, item, (err, res) => {
+
+                if (err) reject(false);
+
+                if (res.length) {
+
+                    resolve(res);
+
+                } else {
+
+                    resolve(false);
+
+                }
+
+            });
+
+        });
 
     }
 
