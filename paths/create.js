@@ -74,30 +74,45 @@ let create = {
 
             res.json(valid);
 
-        } else {
+        } else{
 
-            let encryptedPassword = await bcrypt.hash(body.password, create.saltRounds)
+            let email_used = await sql.dbselect(`users`,{'email':body.email}, "*");
 
-            body.password = encryptedPassword;
+            if(email_used !== false){
 
-            let lastid = await sql.dbinsert(`users`, body);
+                res.statusCode = 404;
 
-            await sql.dbinsert(`verify`, { token: config.makeid(10), userid: lastid, why: "user" });
+                res.json({
 
-            let user = await sql.dbselect('users', { id: lastid });
+                    status: false,
+                    message: "Email already used"
+    
+                });
 
-            delete user[0].password;
+            }else {
 
-            res.statusCode = 200;
+                let encryptedPassword = await bcrypt.hash(body.password, create.saltRounds)
 
-            res.json({
+                body.password = encryptedPassword;
 
-                status: valid,
-                message: "Create User Success",
-                data: {
-                    user: user[0]
-                }
-            });
+                let lastid = await sql.dbinsert(`users`, body);
+
+                await sql.dbinsert(`verify`, { token: config.makeid(10), userid: lastid, why: "user" });
+
+                user = await config.userinfo({ id: lastid });
+
+                res.statusCode = 200;
+
+                res.json({
+
+                    status: valid,
+                    message: "Create User Success",
+                    data: {
+                        user: user
+                    }
+                });
+
+            }
 
         }
 

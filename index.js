@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 app.post('/user/create', create.handler);
 
-app.post('/user/verify/:token', verifyuser.handler);
+app.get('/user/verify/:token', verifyuser.handler);
 
 // create user route ends .......
 

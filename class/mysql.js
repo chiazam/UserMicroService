@@ -53,11 +53,11 @@ const sql = {
         });
 
     },
-    dbdelete: async function (table, item = 1, column = "*", limit = 1, offset = 0) {
+    dbdelete: async function (table, item = 1) {
 
         return new Promise((resolve, reject) => {
 
-            this.dbconn.query(`DELETE FROM ${table} WHERE ? LIMIT ${limit} OFFSET ${offset}`, item, (err, res) => {
+            this.dbconn.query(`DELETE FROM ${table} WHERE ?`, item, (err, res) => {
 
                 if (err) reject(false);
 

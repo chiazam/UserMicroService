@@ -3,69 +3,57 @@ let config = require("../config/config");
 
 let verifyuser = {
 
-    validateinfo: function (info) {
+    handler: async function (req, res) {
+
+        const params = req.params;
 
         let valid = true;
 
         let message = "";
 
-        if (!info.hasOwnProperty('token')) {
-
-            valid = false;
-
-            message = "Permission Denied";
-
-        }
-
-        return (valid) ? (valid) : ({
-
-            status: valid,
-            message: message
-
-        });
-
-    },
-
-    handler: async function (req, res) {
-
-        const params = req.params;
+        let user = false;
 
         console.log(params);
 
-        let valid = verifyuser.validateinfo(params);
+        let verify = await sql.dbselect('verify', params, "userid");
 
-        if (valid !== true) {
+        if(verify == false){
 
             res.statusCode = 404;
 
-            res.json(valid);
+            valid = false;
 
-        } else {
+            message = "Invalid Token";
 
-            let encryptedPassword = await bcrypt.hash(body.password, create.saltRounds)
+        }else{
 
-            body.password = encryptedPassword;
+            let userid = verify[0]['userid'];
 
-            let lastid = await sql.dbinsert(`users`, body);
+            console.log(userid);
 
-            await sql.dbinsert(`verify`, { token: config.makeid(10), userid: lastid, why: "user" });
+            await sql.dbdelete('verify', params);
 
-            let user = await sql.dbget('users', { id: lastid });
+            console.log(userid);
 
-            delete user[0].password;
+            user = await config.userinfo({ id: userid });
 
             res.statusCode = 200;
 
-            res.json({
+            valid = true;
 
-                status: valid,
-                message: "Create User Success",
-                data: {
-                    user: user[0]
-                }
-            });
+            message = "Verify User Success";
 
         }
+        
+        let result = {
+
+            status: valid,
+            message: message,
+            data:(user === false)?(undefined):({ user: user})
+        
+        }
+        
+        res.json(result);
 
     }
 
