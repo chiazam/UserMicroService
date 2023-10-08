@@ -72,7 +72,7 @@ let create = {
 
         if (valid !== true) {
 
-            res.statusCode = 400;
+            res.statusCode = 404;
 
             res.json(valid);
 

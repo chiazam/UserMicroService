@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 // create user route starts .......
 
-app.post('/create', create.handler);
+app.post('user/create', create.handler);
 
 // create user route ends .......
 
