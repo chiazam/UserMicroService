@@ -30,7 +30,7 @@ const sql = {
         });
 
     },
-    dbget: async function (table, item = 1, column = "*", limit = 1, offset = 0) {
+    dbselect: async function (table, item = 1, column = "*", limit = 1, offset = 0) {
 
         return new Promise((resolve, reject) => {
 
@@ -47,6 +47,21 @@ const sql = {
                     resolve(false);
 
                 }
+
+            });
+
+        });
+
+    },
+    dbdelete: async function (table, item = 1, column = "*", limit = 1, offset = 0) {
+
+        return new Promise((resolve, reject) => {
+
+            this.dbconn.query(`DELETE FROM ${table} WHERE ? LIMIT ${limit} OFFSET ${offset}`, item, (err, res) => {
+
+                if (err) reject(false);
+
+                resolve(true);
 
             });
 

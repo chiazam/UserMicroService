@@ -1,8 +1,10 @@
-const express = require('express')
+const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const create = require('./paths/create');
+
+const verifyuser = require('./paths/verifyuser')
 
 const app = express();
 const port = 3000;
@@ -14,7 +16,9 @@ app.use(bodyParser.json());
 
 // create user route starts .......
 
-app.post('user/create', create.handler);
+app.post('/user/create', create.handler);
+
+app.post('/user/verify/:token', verifyuser.handler);
 
 // create user route ends .......
 

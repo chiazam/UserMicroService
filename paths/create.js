@@ -1,5 +1,5 @@
 let sql = require('../class/mysql');
-let config = require("../config/config")
+let config = require("../config/config");
 let bcrypt = require('bcrypt');
 
 let create = {
@@ -62,11 +62,9 @@ let create = {
 
     handler: async function (req, res) {
 
-        const query = req.query;
-
         const body = req.body;
 
-        console.log(body, query);
+        console.log(body);
 
         let valid = create.validateinfo(body);
 
@@ -78,8 +76,6 @@ let create = {
 
         } else {
 
-            res.statusCode = 200;
-
             let encryptedPassword = await bcrypt.hash(body.password, create.saltRounds)
 
             body.password = encryptedPassword;
@@ -88,9 +84,11 @@ let create = {
 
             await sql.dbinsert(`verify`, { token: config.makeid(10), userid: lastid, why: "user" });
 
-            let user = await sql.dbget('users', { id: lastid });
+            let user = await sql.dbselect('users', { id: lastid });
 
             delete user[0].password;
+
+            res.statusCode = 200;
 
             res.json({
 
