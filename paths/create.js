@@ -85,13 +85,13 @@ let create = {
                 res.json({
 
                     status: false,
-                    message: "Email already used"
+                    message: "Email Already Used"
     
                 });
 
             }else {
 
-                let encryptedPassword = await bcrypt.hash(body.password, create.saltRounds)
+                let encryptedPassword = await bcrypt.hash(body.password, create.saltRounds);
 
                 body.password = encryptedPassword;
 

@@ -3,8 +3,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const create = require('./paths/create');
-
-const verifyuser = require('./paths/verifyuser')
+const login = require("./paths/login");
+const logout = require("./paths/logout");
+const verifyuser = require('./paths/verifyuser');
+const verifylogin = require('./paths/verifylogin');
 
 const app = express();
 const port = 3000;
@@ -18,7 +20,14 @@ app.use(bodyParser.json());
 
 app.post('/user/create', create.handler);
 
-app.get('/user/verify/:token', verifyuser.handler);
+app.post('/user/login', login.handler);
+
+app.post('/user/logout', logout.handler);
+
+app.get('/user/verifyuser/:token', verifyuser.handler);
+
+app.get('/user/verifylogin/:logid', verifylogin.handler);
+
 
 // create user route ends .......
 

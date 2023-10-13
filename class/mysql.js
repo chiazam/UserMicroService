@@ -30,6 +30,21 @@ const sql = {
         });
 
     },
+    dbupdate: async function (table, item, replace) {
+
+        return new Promise((resolve, reject) => {
+
+            this.dbconn.query(`UPDATE ${table} SET ? WHERE ?`, [replace, item], (err, res) => {
+
+                if (err) reject(false);
+
+                resolve(true);
+
+            });
+
+        });
+
+    },
     dbselect: async function (table, item = 1, column = "*", limit = 1, offset = 0) {
 
         return new Promise((resolve, reject) => {
