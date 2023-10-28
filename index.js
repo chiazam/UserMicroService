@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const create = require('./paths/create');
 const login = require("./paths/login");
 const logout = require("./paths/logout");

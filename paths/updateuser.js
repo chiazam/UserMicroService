@@ -16,13 +16,13 @@ let updateuser = {
 
             message = "Permission Denied";
 
-        } else if (info.hasOwnProperty('fullname')&&!create.regFullName.test(info.fullname)) {
+        } else if (info.hasOwnProperty('fullname') && !create.regFullName.test(info.fullname)) {
 
             valid = false;
 
             message = "Invalid Full Name";
 
-        } else if (info.hasOwnProperty('type')&&!create.userTypes.includes(info.type)) {
+        } else if (info.hasOwnProperty('type') && !create.userTypes.includes(info.type)) {
 
             valid = false;
 
@@ -61,13 +61,22 @@ let updateuser = {
 
             message = "Invalid Logid";
 
+            let result = {
+
+                status: valid,
+                message: message
+
+            }
+
+            res.json(result);
+
         } else {
 
             const body = req.body;
 
             console.log(body);
 
-            valid = create.validateinfo(body);
+            valid = updateuser.validateinfo(body);
 
             if (valid !== true) {
 
@@ -86,7 +95,7 @@ let updateuser = {
                 res.json({
 
                     status: valid,
-                    message: "Create User Success",
+                    message: "Update User Success",
                     data: {
                         user: user
                     }
