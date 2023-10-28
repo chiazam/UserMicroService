@@ -7,6 +7,7 @@ const logout = require("./paths/logout");
 const verifyuser = require('./paths/verifyuser');
 const verifylogin = require('./paths/verifylogin');
 const updateuser = require('./paths/updateuser');
+const updatepass = require('./paths/updatepass');
 
 const app = express();
 const port = 3000;
@@ -28,7 +29,11 @@ app.get('/user/verifyuser/:token', verifyuser.handler);
 
 app.get('/user/verifylogin/:logid', verifylogin.handler);
 
-app.post('/user/updateuser/:logid',updateuser.handler)
+app.post('/user/updateuser/:logid',updateuser.handler);
+
+app.post('/user/updatepasslink',updatepass.handleemail);
+
+app.post('/user/updatepass/:token',updatepass.handlepass);
 
 
 // create user route ends .......

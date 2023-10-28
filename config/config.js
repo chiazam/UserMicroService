@@ -19,15 +19,15 @@ const config = {
 
         console.log(user);
 
-        if(user===false) {return ({'none':true})};
+        if (user === false) { return ({ 'none': true }) };
 
         user = user[0];
 
         delete user.password;
 
-        let verify = await sql.dbselect('verify', {userid: user.id}, "*");
+        let verify = await sql.dbselect('verify', { userid: user.id}, "*");
 
-        user.verified = (verify===false)?(true):(false);
+        user.verified = (verify === false) ? (true) : (false);
 
         console.log(user);
 
