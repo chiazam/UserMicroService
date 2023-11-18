@@ -31,6 +31,16 @@ CREATE TABLE IF NOT EXISTS `kyc` (
 
 -- Dumping data for table usermicroservice.kyc: ~0 rows (approximately)
 
+-- Dumping structure for table usermicroservice.kyc verify
+CREATE TABLE IF NOT EXISTS `kyc verify` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `userid` longtext NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dumping data for table usermicroservice.kyc verify: ~0 rows (approximately)
+
 -- Dumping structure for table usermicroservice.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -43,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table usermicroservice.users: ~2 rows (approximately)
+-- Dumping data for table usermicroservice.users: ~3 rows (approximately)
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `type`, `logid`, `date`) VALUES
 	(1, 'chiazam udekwe', 'azam@gmail.com', '$2b$10$J8LnzrSn3bJ104yY7YYx3OI1ueBcUCkhAIkB1rz/odxSouox0uedi', 'seller', 'NULL', '2023-10-08 03:57:18'),
 	(2, 'elomi udex', 'chielo@gmail.com', '$2b$10$0s7PkoBzcqQqQMIiHN6mlO6IQAm.Qldu4XrnMUSFXTXBrIQFeDhkC', 'buyer', 'WYiku4DobL', '2023-10-08 06:34:51');
