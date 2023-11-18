@@ -8,6 +8,7 @@ const verifyuser = require('./paths/verifyuser');
 const verifylogin = require('./paths/verifylogin');
 const updateuser = require('./paths/updateuser');
 const updatepass = require('./paths/updatepass');
+const kycadd = require("./paths/kycadd.js");
 
 const app = express();
 const port = 3000;
@@ -33,7 +34,7 @@ app.post('/user/updateuser/:logid',updateuser.handler);
 
 app.post('/user/updatepasslink',updatepass.handleemail);
 
-app.post('/user/updatepass/:token',updatepass.handlepass);
+app.post('/user/kyc/add/:logid',kycadd.handler);
 
 
 // create user route ends .......

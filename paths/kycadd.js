@@ -3,17 +3,31 @@ let config = require("../config/config");
 
 let kycadd = {
 
-    validateinfo: function (info) {
+    kycTypes: ["national id", "driver licence", "passport"],
+
+    validateinfo: function (info, params) {
 
         let valid = true;
 
         let message = "";
 
-        if (!info.hasOwnProperty('userid') || !info.hasOwnProperty('phone') || !info.hasOwnProperty('address') || !info.hasOwnProperty('verifyNo') || !info.hasOwnProperty('verifyType') || !info.hasOwnProperty('bankName') || !info.hasOwnProperty('AccNo') || !info.hasOwnProperty('AccName')) {
+        if (!info.hasOwnProperty('phone') || !info.hasOwnProperty('address') || !info.hasOwnProperty('verifyNo') || !info.hasOwnProperty('verifyType') || !info.hasOwnProperty('bankName') || !info.hasOwnProperty('AccNo') || !info.hasOwnProperty('AccName') || !params.hasOwnProperty('logid')) {
 
             valid = false;
 
             message = "Permission Denied";
+
+        } else if ((info.phone.trim()).length == 0 || (info.address.trim()).length == 0 || (info.verifyNo.trim()).length == 0 || (info.verifyType.trim()).length == 0 || (info.bankName.trim()).length == 0 || (info.AccNo.trim()).length == 0 || (info.AccName.trim()).length == 0) {
+
+            valid = false;
+
+            message = "Fill All Fields";
+
+        }else if (!this.kycTypes.includes(info.verifyType)) {
+
+            valid = false;
+
+            message = "Invalid verifyType (type must be either 'national id', 'driver licence' or 'passport'";
 
         }
 
@@ -30,9 +44,11 @@ let kycadd = {
 
         const body = req.body;
 
+        const params = req.params;
+
         console.log(body);
 
-        let valid = kycadd.validateinfo(body);
+        let valid = kycadd.validateinfo(body, params);
 
         if (valid !== true) {
 
@@ -42,60 +58,43 @@ let kycadd = {
 
         } else {
 
-            let is_user = await sql.dbselect(`users`, { 'userid': body.userid }, "id");
+            console.log(params);
 
-            if (is_user !== false) {
+            let verify = await sql.dbselect('users', params, "*");
+
+            console.log(verify);
+
+            if (verify === false) {
 
                 res.statusCode = 404;
 
                 res.json({
 
                     status: false,
-                    message: "User not found"
+                    message: "Invalid Logid"
 
                 });
 
             } else {
-                
-                let verify = await sql.dbselect('users', params, "id");
 
-            if (verify == false) {
-    
-                res.statusCode = 404;
-    
-                valid = false;
-    
-                message = "Invalid Logid";
-    
-                let result = {
-    
+                let userid = verify[0]['id'];
+
+                body.userid = userid;
+
+                await sql.dbinsert(`kyc`, body);
+
+                user = await config.userinfo({ id: userid });
+
+                res.statusCode = 200;
+
+                res.json({
+
                     status: valid,
-                    message: message
-    
-                }
-    
-                res.json(result);
-    
-            } else {
-
-                    let lastid = await sql.dbinsert(`kyc`, body);
-
-                    await sql.dbinsert(`verify`, { token: config.makeid(10), userid: lastid, why: "user" });
-
-                    user = await config.userinfo({ id: lastid });
-
-                    res.statusCode = 200;
-
-                    res.json({
-
-                        status: valid,
-                        message: "Create User Success",
-                        data: {
-                            user: user
-                        }
-                    });
-
-                }
+                    message: "Add KYC",
+                    data: {
+                        user: user
+                    }
+                });
 
             }
 

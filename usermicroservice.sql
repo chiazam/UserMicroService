@@ -31,15 +31,15 @@ CREATE TABLE IF NOT EXISTS `kyc` (
 
 -- Dumping data for table usermicroservice.kyc: ~0 rows (approximately)
 
--- Dumping structure for table usermicroservice.kyc verify
-CREATE TABLE IF NOT EXISTS `kyc verify` (
+-- Dumping structure for table usermicroservice.kyc_verify
+CREATE TABLE IF NOT EXISTS `kyc_verify` (
   `id` int NOT NULL AUTO_INCREMENT,
   `userid` longtext NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table usermicroservice.kyc verify: ~0 rows (approximately)
+-- Dumping data for table usermicroservice.kyc_verify: ~0 rows (approximately)
 
 -- Dumping structure for table usermicroservice.users
 CREATE TABLE IF NOT EXISTS `users` (
