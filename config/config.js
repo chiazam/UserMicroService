@@ -29,6 +29,10 @@ const config = {
 
         user.verified = (verify === false) ? (true) : (false);
 
+        let kycVerify = await sql.dbselect('kyc_verify', { userid: user.id });
+
+        user.kycverified = (kycVerify !== false) ? (true) : (false);
+
         user.kyc = await config.kycinfo({ userid: user.id });
 
         console.log(user);
@@ -48,8 +52,6 @@ const config = {
         kyc = kyc[0];
 
         let kycVerify = await sql.dbselect('kyc_verify', { userid: kyc.userid });
-
-        kyc.verified = (kycVerify === false) ? (true) : (false);
 
         if (kyc.verified === true) {
 

@@ -79,9 +79,11 @@ let kycadd = {
 
                 let userid = verify[0]['id'];
 
-                body.userid = userid;
+                let kycinfo = {userid:userid, ...body};
 
-                await sql.dbinsert(`kyc`, body);
+                console.log(kycinfo);
+
+                await sql.dbinsert(`kyc`, kycinfo);
 
                 user = await config.userinfo({ id: userid });
 
@@ -90,7 +92,7 @@ let kycadd = {
                 res.json({
 
                     status: valid,
-                    message: "Add KYC",
+                    message: "Add KYC Successfull",
                     data: {
                         user: user
                     }

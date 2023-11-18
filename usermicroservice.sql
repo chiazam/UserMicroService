@@ -16,7 +16,7 @@
 
 -- Dumping structure for table usermicroservice.kyc
 CREATE TABLE IF NOT EXISTS `kyc` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `userid` longtext NOT NULL,
   `address` longtext NOT NULL,
   `phone` longtext NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Dumping data for table usermicroservice.users: ~3 rows (approximately)
 INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `type`, `logid`, `date`) VALUES
-	(1, 'chiazam udekwe', 'azam@gmail.com', '$2b$10$J8LnzrSn3bJ104yY7YYx3OI1ueBcUCkhAIkB1rz/odxSouox0uedi', 'seller', 'NULL', '2023-10-08 03:57:18'),
+	(1, 'chiazam udekwe', 'azam@gmail.com', '$2b$10$J8LnzrSn3bJ104yY7YYx3OI1ueBcUCkhAIkB1rz/odxSouox0uedi', 'seller', 'e7zW11YEsZ', '2023-10-08 03:57:18'),
 	(2, 'elomi udex', 'chielo@gmail.com', '$2b$10$0s7PkoBzcqQqQMIiHN6mlO6IQAm.Qldu4XrnMUSFXTXBrIQFeDhkC', 'buyer', 'WYiku4DobL', '2023-10-08 06:34:51');
 
 -- Dumping structure for table usermicroservice.verify
